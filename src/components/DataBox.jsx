@@ -1,4 +1,5 @@
 // DataBox.js
+// Displays ID and current temperature
 
 function DataBox({id, temp}) {
   return (

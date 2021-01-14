@@ -1,44 +1,75 @@
 // Plot.jsx
+// Displays data markers and builds plot
 
 import { useEffect } from 'react';
 import PlotMarker from './PlotMarker';
 
-function Plot({data}) {
+function Plot({idData, plotData}) {
 
-  const color1 = 'steelblue';
-  const color2 = 'sienna';
+  // colors of data marker and plot line 
+  const color = ['steelblue', 'sienna'];
 
   useEffect(() => {
     const canvas = document.getElementById('plot');
-    if (canvas && data && data.length > 0) {
-      // set scale !!! test formulas
+    if (plotData.plot1.length > 0 && plotData.plot2.length > 0 && idData.length === 2 ) {
+      // get interval of data values
       const dataHeight = 100; // maximum data value to be present
-      const dataWidth = data[data.length - 1].timestamp - data[0].timestamp; // time period from beginning 
-      if (canvas.getContext && dataWidth > 0) {  
-        // scale coefficients
+      const dataTimeMin = 
+        Math.min(
+          plotData.plot1[0].time, 
+          plotData.plot2[0].time
+        );
+      const dataTimeMax = 
+        Math.max(
+          plotData.plot1[plotData.plot1.length - 1].time, 
+          plotData.plot2[plotData.plot2.length - 1].time
+        );
+      const dataWidth = dataTimeMax - dataTimeMin;
+      if (canvas && canvas.getContext && dataWidth > 0) {  
+        // get scale coefficients
         const widthCoef = canvas.width / dataWidth;
         const heightCoef = canvas.height / dataHeight;
-        console.log(widthCoef + ' ' + heightCoef);
-        // draw plot !!! test line formulas
+        // prepare plot canvas
         const ctx = canvas.getContext('2d'); 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.lineWidth = 1;
-        ctx.strokeStyle = color1;
-        ctx.beginPath();
-        // ctx.moveTo(0, canvas.height);
-        ctx.moveTo(widthCoef * (data[0].timestamp - data[0].timestamp), canvas.height - heightCoef * data[0].data);
-        ctx.lineTo(widthCoef * (data[1].timestamp - data[0].timestamp), canvas.height - heightCoef * data[1].data);
-        ctx.stroke();
+        // plot building function
+        const buildPlot = (data, color) => {
+          ctx.strokeStyle = color;
+          ctx.beginPath();
+          ctx.moveTo(
+            widthCoef * (data[0].time - dataTimeMin ), 
+            canvas.height - heightCoef * data[0].value
+          );
+          for (let point of data) {
+            ctx.lineTo(
+              widthCoef * (point.time - dataTimeMin), 
+              canvas.height - heightCoef * point.value
+            );
+          } 
+          ctx.stroke();
+        }
+        // build plots
+        buildPlot(plotData.plot1, color[0]);
+        buildPlot(plotData.plot2, color[1]);
       }
     }
   });
 
   return (
     <div className="Plot">
-      <h2>DATA</h2>
+      <h2>Data</h2>
       <div className="plot-markers">
-        <PlotMarker id={1} color={color1} />
-        <PlotMarker id={2} color={color2} />
+        {
+          idData.map( 
+            (id, index) => 
+            <PlotMarker 
+              id={id} 
+              color={color[index] } 
+              key={id}
+            />
+          )        
+        }
       </div>
       <canvas id="plot">
         Your browser doesn't support canvas

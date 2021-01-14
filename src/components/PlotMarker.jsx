@@ -1,4 +1,5 @@
 // PlotMarker.jsx
+// Displays ID and plot marker
 
 function PlotMarker({id, color}) {
 
