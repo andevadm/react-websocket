@@ -1,4 +1,5 @@
 /* App.css */
+/* Styles of the app components */
 
 .App {
   text-align: left;
@@ -7,7 +8,7 @@
 /* Container blocks */
 
 header { 
-  padding: 20px 60px;
+  padding: 20px 12vw;
   border-bottom: 2px solid gray;
   text-align: right;
 }
@@ -25,7 +26,7 @@ h1,
 h2 {
   padding-bottom: 5px;
   font-size: 1.2em;
-  font-weight: bold;
+  font-weight: 600;
   text-transform: uppercase;
 }
 
@@ -33,13 +34,14 @@ h2 {
 
 .DataBox,
 .Plot {
-  margin: 20px 50px;
+  margin: 20px 10vw;
   border: 2px solid gray;
 }
 
 .DataBox {
   flex: 1;
   width: 40%;
+  min-width: 150px;
   padding: 20px;
 }
 
@@ -64,9 +66,22 @@ h2 {
   padding: 20px;
 }
 
-.plot-markers span {
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  margin-right: 1em;
+.PlotMarker {
+  border-left: 1.3em solid white;
+  padding-left: 1em;
+}
+
+/* Small side padding for small screens */
+
+@media screen and (max-width: 600px) {
+
+  .DataBox,
+  .Plot {
+    margin: 20px 10px;
+  }
+
+  header {
+    padding: 20px;
+  }
+
 }

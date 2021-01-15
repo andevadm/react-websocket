@@ -1,18 +1,18 @@
 // Plot.jsx
-// Displays data markers and builds plot
+// Displays a canvas and builds plot
 
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PlotMarker from './PlotMarker';
 
 function Plot({idData, plotData}) {
 
-  // colors of data marker and plot line 
+  // colors of data marker and plot line corresponding to idData
   const color = ['steelblue', 'sienna'];
 
   useEffect(() => {
-    const canvas = document.getElementById('plot');
+
+    // get interval of data values
     if (plotData.plot1.length > 0 && plotData.plot2.length > 0 && idData.length === 2 ) {
-      // get interval of data values
       const dataHeight = 100; // maximum data value to be present
       const dataTimeMin = 
         Math.min(
@@ -25,7 +25,10 @@ function Plot({idData, plotData}) {
           plotData.plot2[plotData.plot2.length - 1].time
         );
       const dataWidth = dataTimeMax - dataTimeMin;
-      if (canvas && canvas.getContext && dataWidth > 0) {  
+      
+      // canvas operations
+      const canvas = document.getElementById('plot');
+      if (canvas.getContext && dataWidth > 0) {  
         // get scale coefficients
         const widthCoef = canvas.width / dataWidth;
         const heightCoef = canvas.height / dataHeight;
@@ -63,11 +66,7 @@ function Plot({idData, plotData}) {
         {
           idData.map( 
             (id, index) => 
-            <PlotMarker 
-              id={id} 
-              color={color[index] } 
-              key={id}
-            />
+            <PlotMarker id={id} color={color[index]} key={index}  />
           )        
         }
       </div>

@@ -1,12 +1,13 @@
 /* index.css */
+/* Font and normalization */
 
-/* Font and Normalization */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
 
 * {
 	box-sizing: border-box;
 }
 
-html, body, div, span, p, footer, header, h1, h2 {
+html, body, div, span, p, header, h1, h2 {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -17,14 +18,10 @@ html, body, div, span, p, footer, header, h1, h2 {
 }
 
 html {
-	font: 18px sans-serif;
+	font: 18px 'Open Sans', sans-serif;
 }
 
 body {
 	color: #444;
 	background-color: white;
-}
-
-footer, header {
-	display: block;
 }

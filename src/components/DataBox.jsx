@@ -1,6 +1,8 @@
 // DataBox.js
 // Displays ID and current temperature
 
+import React from 'react';
+
 function DataBox({id, temp}) {
   return (
     <div className="DataBox">
